@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { PrismaModule } from './common/prisma/prisma.module';
 import { CommunityModule } from './module/community/community.module';
 import { PaymentModule } from './module/payment/payment.module';
+import { ShareModule } from './module/share/share.module';
 
 @Module({
-    imports: [PrismaModule, CommunityModule, PaymentModule],
+    imports: [PrismaModule, CommunityModule, PaymentModule, ShareModule],
     controllers: [AppController],
     providers: [AppService],
 })
