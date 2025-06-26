@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../prisma/generated/master-client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("MASTER_DATABASE_URL")
+}
+
+model board {
+  boardId    Int      @id @default(autoincrement()) @db.UnsignedInt
+  categoryId Int      @db.UnsignedInt
+  category   category @relation(fields: [categoryId], references: [categoryId])
+}
+
+model category {
+  categoryId   Int     @id @default(autoincrement()) @db.UnsignedInt
+  categoryName String  @db.VarChar(50)
+  boards       board[] // 1:N 관계
+}
+
+model comments {
+  commentsId       Int              @id @default(autoincrement()) @db.UnsignedInt
+  parentId         Int?             @db.UnsignedInt
+  commentsContents String           @db.TinyText
+  photos           comments_photo[] // 1:N 관계
+}
+
+model comments_photo {
+  commentsPhotoId Int      @id @default(autoincrement()) @db.UnsignedInt
+  commentsId      Int      @db.UnsignedInt
+  comment         comments @relation(fields: [commentsId], references: [commentsId])
+  fileName        String?  @db.VarChar(100)
+  filePath        String?  @db.VarChar(255)
+}
+
+model post {
+  postId       Int          @id @default(autoincrement()) @db.UnsignedInt
+  postName     String       @db.VarChar(50)
+  postContents String       @db.TinyText
+  photos       post_photo[] // 1:N 관계
+}
+
+model post_photo {
+  postPhotoId Int     @id @default(autoincrement()) @db.UnsignedInt
+  postId      Int     @db.UnsignedInt
+  post        post    @relation(fields: [postId], references: [postId])
+  fileName    String? @db.VarChar(100)
+  filePath    String? @db.VarChar(255)
+}
