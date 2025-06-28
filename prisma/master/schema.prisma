@@ -23,9 +23,11 @@ model category {
 
 model comments {
   commentsId       Int              @id @default(autoincrement()) @db.UnsignedInt
+  postId           Int              @db.UnsignedInt
   userId           Int              @db.UnsignedInt
   parentId         Int?             @db.UnsignedInt
   commentsContents String           @db.TinyText
+  post             post             @relation(fields: [postId], references: [postId])
   user             user             @relation(fields: [userId], references: [userId])
   photos           comments_photo[]
 }
@@ -44,6 +46,7 @@ model post {
   userId       Int          @db.UnsignedInt
   postName     String       @db.VarChar(50)
   postContents String       @db.TinyText
+  comments     comments[]
   user         user         @relation(fields: [userId], references: [userId])
   board        board        @relation(fields: [boardId], references: [boardId])
   photos       post_photo[]

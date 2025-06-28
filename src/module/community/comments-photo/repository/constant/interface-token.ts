@@ -1,1 +1,0 @@
-export const GET_COMMENTS_PHOTO_QUERY_INTERFACE = 'GetCommentsPhotoQueryInterface';
