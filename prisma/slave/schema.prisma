@@ -12,19 +12,22 @@ model board {
   boardId    Int      @id @default(autoincrement()) @db.UnsignedInt
   categoryId Int      @db.UnsignedInt
   category   category @relation(fields: [categoryId], references: [categoryId])
+  posts      post[]
 }
 
 model category {
   categoryId   Int     @id @default(autoincrement()) @db.UnsignedInt
   categoryName String  @db.VarChar(50)
-  boards       board[] // 1:N 관계
+  boards       board[]
 }
 
 model comments {
   commentsId       Int              @id @default(autoincrement()) @db.UnsignedInt
+  userId           Int              @db.UnsignedInt
   parentId         Int?             @db.UnsignedInt
   commentsContents String           @db.TinyText
-  photos           comments_photo[] // 1:N 관계
+  user             user             @relation(fields: [userId], references: [userId])
+  photos           comments_photo[]
 }
 
 model comments_photo {
@@ -37,9 +40,13 @@ model comments_photo {
 
 model post {
   postId       Int          @id @default(autoincrement()) @db.UnsignedInt
+  boardId      Int          @db.UnsignedInt
+  userId       Int          @db.UnsignedInt
   postName     String       @db.VarChar(50)
   postContents String       @db.TinyText
-  photos       post_photo[] // 1:N 관계
+  user         user         @relation(fields: [userId], references: [userId])
+  board        board        @relation(fields: [boardId], references: [boardId])
+  photos       post_photo[]
 }
 
 model post_photo {
@@ -48,4 +55,11 @@ model post_photo {
   post        post    @relation(fields: [postId], references: [postId])
   fileName    String? @db.VarChar(100)
   filePath    String? @db.VarChar(255)
+}
+
+model user {
+  userId    Int        @id @default(autoincrement()) @db.UnsignedInt
+  userName  String     @db.VarChar(50)
+  posts     post[]
+  comments  comments[]
 }
