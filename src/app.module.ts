@@ -7,9 +7,18 @@ import { ShareModule } from './module/share/share.module';
 import { UserModule } from './module/user/user.module';
 import { TestModule } from './module/test/test.module';
 import { WinstonClientModule } from './common/logger/winston/winston-client.module';
+import { GlobalExceptionModule } from './common/exception/global-exception.module';
 
 @Module({
-    imports: [PrismaModule, CommunityModule, ShareModule, UserModule, TestModule, WinstonClientModule],
+    imports: [
+        PrismaModule,
+        CommunityModule,
+        ShareModule,
+        UserModule,
+        TestModule,
+        WinstonClientModule,
+        GlobalExceptionModule,
+    ],
     controllers: [AppController],
     providers: [AppService],
 })
