@@ -5,9 +5,10 @@ import { PrismaModule } from './common/prisma/prisma.module';
 import { CommunityModule } from './module/community/community.module';
 import { ShareModule } from './module/share/share.module';
 import { UserModule } from './module/user/user.module';
+import { TestModule } from './module/test/test.module';
 
 @Module({
-    imports: [PrismaModule, CommunityModule, ShareModule, UserModule],
+    imports: [PrismaModule, CommunityModule, ShareModule, UserModule, TestModule],
     controllers: [AppController],
     providers: [AppService],
 })
